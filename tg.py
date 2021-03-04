@@ -20,7 +20,7 @@ def get_crypto_price(sfppricelist, juldpricelist, leadpricelist, pundixpricelist
     juldpricelist.append(response["lead-token"]["usd"])
     pundixpricelist.append(response["pundi-x"]["usd"])
 
-    return sfppricelist, leadpricelist, juldpricelist
+    return sfppricelist, leadpricelist, juldpricelist, pundixpricelist
 
 
 # fn to send_message through telegram
