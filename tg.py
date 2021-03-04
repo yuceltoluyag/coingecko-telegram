@@ -5,7 +5,7 @@ from pycoingecko import CoinGeckoAPI
 # global variables
 bot_token = environ['YOUR_BOT_TOKEN']
 chat_id = environ['YOUR_CHAT_ID']
-time_interval = 3600  # in seconds
+time_interval = 30  # in seconds
 
 
 def get_crypto_price(sfppricelist, juldpricelist, leadpricelist):
