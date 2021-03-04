@@ -8,20 +8,17 @@ chat_id = environ['YOUR_CHAT_ID']
 time_interval = 30  # in seconds
 
 
-def get_crypto_price(sfppricelist, juldpricelist, leadpricelist):
+def get_crypto_price(sfppricelist, juldpricelist, leadpricelist, pundixpricelist):
 
     geckoAPI = CoinGeckoAPI()
     response = geckoAPI.get_price(
-        ids=[
-            'safepal',
-            'julswap',
-            'lead-token',
-        ],
+        ids=['safepal', 'julswap', 'lead-token', 'pundi-x'],
         vs_currencies="usd",
     )
     sfppricelist.append(response["safepal"]["usd"])
     leadpricelist.append(response["julswap"]["usd"])
     juldpricelist.append(response["lead-token"]["usd"])
+    pundixpricelist.append(response["pundi-x"]["usd"])
 
     return sfppricelist, leadpricelist, juldpricelist
 
@@ -45,6 +42,7 @@ def format_msg(pricelisting):
         f'\nSFP: {pricelisting[0][0]}$ -> {pricelisting[0][1]}$ = {difflisting[0]}$!'
         f'\nJULD: {pricelisting[1][0]}$ -> {pricelisting[1][1]}$ = {difflisting[1]}$!'
         f'\nLEAD: {pricelisting[2][0]}$ -> {pricelisting[2][1]}$ = {difflisting[2]}$!'
+        f'\nNPXS: {pricelisting[3][0]}$ -> {pricelisting[3][1]}$ = {difflisting[3]}$!'
     )
 
     return msg
@@ -54,10 +52,13 @@ def main():
     sfppricelist = []
     juldpricelist = []
     leadpricelist = []
+    pundixpricelist = []
 
     # infinite loop
     while True:
-        pricelistings = get_crypto_price(sfppricelist, juldpricelist, leadpricelist)
+        pricelistings = get_crypto_price(
+            sfppricelist, juldpricelist, leadpricelist, pundixpricelist
+        )
 
         # send last 6 btc price
         if len(pricelistings[0]) >= 2:
